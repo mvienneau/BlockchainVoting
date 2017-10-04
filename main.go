@@ -1,22 +1,26 @@
 package main
 
 import (
-  "github.com/julienschmidt/httprouter",
+  "github.com/julienschmidt/httprouter"
+  
   "fmt"
+  "log"
+  "net/http"
+  "encoding/json"
 )
 
 func main() {
   router := httprouter.New()
   router.GET("/status", statusHandler)
   router.GET("/account/:accountName", accountHandler)
-  router.GET("/", indexHanlder)
+  router.GET("/", indexHandler)
   
   router.NotFound = http.HandlerFunc(notFound)
   router.MethodNotAllowed = http.HandlerFunc(notAllowed)
   router.PanicHandler = panicHandler
   
   log.Println("server START")
-  log.Fatal(http.ListenAndServer(":8080", router))
+  log.Fatal(http.ListenAndServe(":8085", router))
   
 }
 
@@ -37,7 +41,7 @@ func panicHandler(responseWriter http.ResponseWriter, request *http.Request, _ i
 // regular router funcs
 
 func indexHandler(responseWriter http.ResponseWriter, request *http.Request, _ httprouter.Params) {
-  printJsonKeyValueResponse(responseWriter, request, "ETHKEDDIT", "YEET(API)")
+  printJsonKeyValueResponse(responseWriter, request, "ETHKEDDIT", "YEET")
 }
 
 func statusHandler(responseWriter http.ResponseWriter, request *http.Request, parameters httprouter.Params) {
