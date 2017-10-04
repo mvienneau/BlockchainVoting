@@ -1,7 +1,8 @@
 package main
 
 import (
-  "github.com/julienschmidt/httprouter"
+  "github.com/julienschmidt/httprouter",
+  "fmt"
 )
 
 func main() {
